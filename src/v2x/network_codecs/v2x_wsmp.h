@@ -54,4 +54,7 @@ struct v2x_wsmp_packet {
     int wsmplen;
 };
 
+int v2x_wsmp_encode(const struct v2x_wsmp_packet *pkt, uint8_t *data, size_t datalen, uint8_t *outbuf);
+int v2x_wsmp_decode(struct v2x_wsmp_packet *packet, uint8_t *datain, size_t datasize, uint8_t *wsmdata);
+
 #endif

@@ -3,11 +3,15 @@ cmake_minimum_required(VERSION 3.5)
 project(Edge_Connect)
 
 set(WSMP_SRC
-    ./v2x/v2x_wsmp.c)
+    ./v2x/network_codecs/v2x_wsmp.c)
 
-set(CMAKE_C_FLAGS "-Wall -Werror")
+# use clang as compiler
+set(CMAKE_C_COMPILER "clang")
+
+set(CMAKE_C_FLAGS "-Wall -Werror -Wextra -Wno-unused-parameter")
 
 include_directories(
-    ./v2x/)
+    ./v2x/
+    ./v2x/network_codecs/)
 
 add_library(v2x_wsmp ${WSMP_SRC})
