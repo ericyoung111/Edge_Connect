@@ -1,3 +1,9 @@
+/**
+ * 
+ * implements utilities for safe buffer position pointer
+ * 
+ * @copyright Eric Young 2019-present
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>

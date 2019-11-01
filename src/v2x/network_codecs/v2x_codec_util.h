@@ -1,3 +1,9 @@
+/**
+ * 
+ * implements codec utilities
+ * 
+ * @copyright Eric Young 2019-present
+ */
 #ifndef __V2X_CODEC_UTIL_H__
 #define __V2X_CODEC_UTIL_H__
 
