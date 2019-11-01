@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include <string>
+#include <stdint.h>
 #include <vector>
 #include <v2x_codec_util.h>
 #include <v2x_16093_common_structs.h>
