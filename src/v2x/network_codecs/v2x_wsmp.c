@@ -6,6 +6,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <v2x_codec_util.h>
 #include <v2x_wsmp.h>
 
 /**
@@ -34,27 +35,27 @@ int v2x_wsmp_encode(const struct v2x_wsmp_packet *pkt, uint8_t *data, size_t dat
         outbuf[pos] |= 0x80;
     }
     outbuf[pos] |= pkt->wsmp_version;
-    pos ++;
+    v2x_codec_util_safe_inc(&pos, 1, datalen);
 
     // set opts
     if (valid_opts) {
 
         // set opt count
         outbuf[pos] = valid_opts;
-        pos ++;
+        v2x_codec_util_safe_inc(&pos, 1, datalen);
 
         // encode channel
         //
         // always IE name | length | value
         if (pkt->chan.valid) {
             outbuf[pos] = V2X_WSMP_IE_CHAN;
-            pos ++;
+            v2x_codec_util_safe_inc(&pos, 1, datalen);
 
             outbuf[pos] = V2X_WSMP_IE_CHAN_LEN;
-            pos ++;
+            v2x_codec_util_safe_inc(&pos, 1, datalen);
 
             outbuf[pos] = pkt->chan.chan;
-            pos ++;
+            v2x_codec_util_safe_inc(&pos, 1, datalen);
         }
 
         // encode rate ..
@@ -62,13 +63,13 @@ int v2x_wsmp_encode(const struct v2x_wsmp_packet *pkt, uint8_t *data, size_t dat
         // IE name | length | value
         if (pkt->rate.valid) {
             outbuf[pos] = V2X_WSMP_IE_RATE;
-            pos ++;
+            v2x_codec_util_safe_inc(&pos, 1, datalen);
 
             outbuf[pos] = V2X_WSMP_IE_RATE_LEN;
-            pos ++;
+            v2x_codec_util_safe_inc(&pos, 1, datalen);
 
             outbuf[pos] = pkt->rate.datarate;
-            pos ++;
+            v2x_codec_util_safe_inc(&pos, 1, datalen);
         }
 
         // encode txpow ..
@@ -76,13 +77,13 @@ int v2x_wsmp_encode(const struct v2x_wsmp_packet *pkt, uint8_t *data, size_t dat
         // IE name | length | value
         if (pkt->txpow.valid) {
             outbuf[pos] = V2X_WSMP_IE_TXPOW;
-            pos ++;
+            v2x_codec_util_safe_inc(&pos, 1, datalen);
 
             outbuf[pos] = V2X_WSMP_IE_TXPOW_LEN;
-            pos ++;
+            v2x_codec_util_safe_inc(&pos, 1, datalen);
 
             outbuf[pos] = pkt->txpow.txpower;
-            pos ++;
+            v2x_codec_util_safe_inc(&pos, 1, datalen);
         }
     }
 
@@ -90,22 +91,22 @@ int v2x_wsmp_encode(const struct v2x_wsmp_packet *pkt, uint8_t *data, size_t dat
     //
     // no IE for TPID
     outbuf[pos] = pkt->tpid;
-    pos ++;
+    v2x_codec_util_safe_inc(&pos, 1, datalen);
 
     // encode PSID
     //
     memcpy(outbuf + pos, &pkt->psid, sizeof(pkt->psid));
-    pos += sizeof(pkt->psid);
+    v2x_codec_util_safe_inc(&pos, sizeof(pkt->psid), datalen);
 
     // encode wsmplen
     //
     memcpy(outbuf + pos, &pkt->wsmplen, sizeof(pkt->wsmplen));
-    pos += sizeof(pkt->wsmplen);
+    v2x_codec_util_safe_inc(&pos, sizeof(pkt->wsmplen), datalen);
 
     // copy final data packet
     //
     memcpy(outbuf + pos, data, datalen);
-    pos += datalen;
+    v2x_codec_util_safe_inc(&pos, pkt->wsmplen, datalen);
 
     return pos;
 }
