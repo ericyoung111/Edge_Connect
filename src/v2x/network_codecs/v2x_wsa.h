@@ -73,4 +73,7 @@ struct v2x_wsa_packet {
     v2x_wra_elem                            wra_elem;
 };
 
+// current WSA version is 3
+#define V2X_WSA_VERSION_CUR 3
+
 #endif

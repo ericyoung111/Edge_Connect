@@ -103,17 +103,18 @@ enum channel_access_80211 {
 
 // info elem chan
 #define V2X_WSMP_IE_CHAN 0x0F
-
 #define V2X_WSMP_IE_CHAN_LEN 1
 
 // info elem rate
 #define V2X_WSMP_IE_RATE 0x10
-
 #define V2X_WSMP_IE_RATE_LEN 1
 
 // info elem txpow
 #define V2X_WSMP_IE_TXPOW 0x04
-
 #define V2X_WSMP_IE_TXPOW_LEN 1
+
+// info elem repeat rate
+#define V2X_WSMP_IE_REPEAT_RATE 0x11
+#define V2X_WSMP_IE_REPEAT_RATE_LEN 1
 
 #endif
